@@ -1,0 +1,4702 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>Hasya Hospital Management System</title>
+
+<style>
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+    font-family:Segoe UI,Arial,sans-serif;
+}
+
+:root{
+    --primary:#7b2ff7;
+    --secondary:#f107a3;
+    --blue:#1976d2;
+    --green:#159947;
+    --red:#e53935;
+    --orange:#ff9800;
+    --purple:#673ab7;
+    --cyan:#0097a7;
+    --pink:#ec407a;
+    --yellow:#fbc02d;
+    --bg:#f5f3ff;
+    --card:#fff;
+    --text:#222;
+    --border:#ddd;
+}
+
+body{
+    background:linear-gradient(135deg,#f5f3ff,#fff0f7,#eef7ff,#f0fff4);
+    background-size:400% 400%;
+    animation:bgMove 12s ease infinite;
+    color:var(--text);
+    min-height:100vh;
+    transition:.3s;
+}
+
+@keyframes bgMove{
+    0%{background-position:0% 50%}
+    50%{background-position:100% 50%}
+    100%{background-position:0% 50%}
+}
+
+button,input,select,textarea{
+    width:100%;
+    padding:13px;
+    margin-top:8px;
+    border-radius:10px;
+    border:1px solid var(--border);
+    font-size:15px;
+}
+
+textarea{
+    min-height:90px;
+    resize:vertical;
+}
+
+button{
+    border:none;
+    cursor:pointer;
+    color:white;
+    font-weight:600;
+    transition:.2s;
+}
+
+button:hover{
+    transform:translateY(-2px);
+    filter:brightness(.95);
+    box-shadow:0 5px 12px rgba(0,0,0,.15);
+}
+
+input:focus,
+select:focus,
+textarea:focus{
+    outline:none;
+    border-color:var(--primary);
+    box-shadow:0 0 0 3px rgba(123,47,247,.12);
+}
+
+.primary{
+    background:linear-gradient(135deg,#7b2ff7,#f107a3);
+}
+
+.blue{background:#1976d2}
+.green{background:#159947}
+.red{background:#e53935}
+.orange{background:#ff9800}
+.purple{background:#673ab7}
+.secondary{background:#555}
+.cyan{background:#0097a7}
+.pink{background:#ec407a}
+.yellow{background:#d99a00}
+
+label{
+    display:block;
+    font-weight:600;
+    margin-top:5px;
+}
+
+/* LOGIN */
+
+.login{
+    min-height:100vh;
+    display:flex;
+    justify-content:center;
+    align-items:center;
+    background:linear-gradient(
+        135deg,
+        #7b2ff7,
+        #f107a3,
+        #ff6b6b,
+        #00acc1
+    );
+    background-size:400% 400%;
+    animation:bgMove 8s ease infinite;
+}
+
+.login-box{
+    width:390px;
+    max-width:92%;
+    background:white;
+    padding:35px;
+    border-radius:25px;
+    box-shadow:0 20px 50px rgba(0,0,0,.3);
+    text-align:center;
+}
+
+.login-logo{
+    width:80px;
+    height:80px;
+    margin:auto;
+    margin-bottom:15px;
+    border-radius:50%;
+    background:linear-gradient(135deg,#7b2ff7,#f107a3);
+    color:white;
+    display:flex;
+    align-items:center;
+    justify-content:center;
+    font-size:38px;
+}
+
+.login-box h1{
+    color:#7b2ff7;
+    margin-bottom:5px;
+}
+
+.login-box p{
+    color:#777;
+    margin-bottom:20px;
+}
+
+/* DASHBOARD */
+
+.dashboard{
+    display:none;
+    padding:18px;
+    max-width:1500px;
+    margin:auto;
+}
+
+.header{
+    color:white;
+    padding:25px;
+    border-radius:22px;
+    margin-bottom:18px;
+    background:linear-gradient(
+        135deg,
+        #7b2ff7,
+        #f107a3,
+        #ff6b6b,
+        #00acc1
+    );
+    background-size:300% 300%;
+    animation:bgMove 8s ease infinite;
+    box-shadow:0 8px 25px rgba(123,47,247,.3);
+}
+
+.header h1{
+    font-size:30px;
+}
+
+.header p{
+    margin-top:6px;
+}
+
+.card{
+    background:var(--card);
+    padding:20px;
+    margin:16px 0;
+    border-radius:18px;
+    box-shadow:0 5px 20px rgba(0,0,0,.09);
+}
+
+.card h2{
+    margin-bottom:15px;
+}
+
+.stats{
+    display:grid;
+    grid-template-columns:repeat(5,1fr);
+    gap:15px;
+}
+
+.stat{
+    padding:20px;
+    border-radius:18px;
+    background:white;
+    text-align:center;
+    box-shadow:0 5px 15px rgba(0,0,0,.08);
+}
+
+.stat:nth-child(1){border-top:5px solid #7b2ff7}
+.stat:nth-child(2){border-top:5px solid #f107a3}
+.stat:nth-child(3){border-top:5px solid #159947}
+.stat:nth-child(4){border-top:5px solid #1976d2}
+.stat:nth-child(5){border-top:5px solid #ff9800}
+
+.stat h2{
+    font-size:30px;
+    color:#7b2ff7;
+}
+
+.grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:15px;
+}
+
+.three-grid{
+    display:grid;
+    grid-template-columns:repeat(3,1fr);
+    gap:15px;
+}
+
+/* DOCTORS */
+
+.doctor-card{
+    border-radius:16px;
+    padding:18px;
+    color:white;
+    background:linear-gradient(135deg,#1976d2,#00acc1);
+    box-shadow:0 8px 18px rgba(25,118,210,.25);
+}
+
+.doctor-card:nth-child(2){
+    background:linear-gradient(135deg,#7b2ff7,#f107a3);
+}
+
+.doctor-card:nth-child(3){
+    background:linear-gradient(135deg,#159947,#00a86b);
+}
+
+.doctor-card:nth-child(4){
+    background:linear-gradient(135deg,#ff9800,#f44336);
+}
+
+.slot-list{
+    display:flex;
+    flex-wrap:wrap;
+    gap:7px;
+    margin-top:12px;
+}
+
+.slot{
+    padding:7px 10px;
+    border-radius:20px;
+    font-size:12px;
+    background:white;
+    color:#222;
+}
+
+.slot.booked{
+    background:#e53935;
+    color:white;
+}
+
+.slot.free{
+    background:#dff7e7;
+    color:#08752f;
+}
+
+.availability{
+    display:inline-block;
+    padding:6px 12px;
+    border-radius:20px;
+    margin-top:8px;
+    font-weight:bold;
+    font-size:13px;
+}
+
+.availability.available{
+    background:#d4edda;
+    color:#155724;
+}
+
+.availability.not{
+    background:#f8d7da;
+    color:#721c24;
+}
+
+.hours{
+    margin-top:8px;
+    background:rgba(255,255,255,.2);
+    padding:8px;
+    border-radius:8px;
+}
+
+/* CALENDAR */
+
+.calendar-head{
+    display:flex;
+    justify-content:space-between;
+    align-items:center;
+    gap:10px;
+}
+
+.calendar-head button{
+    width:auto;
+    padding:9px 16px;
+}
+
+.calendar{
+    display:grid;
+    grid-template-columns:repeat(7,1fr);
+    gap:5px;
+    margin-top:15px;
+}
+
+.day-name{
+    background:linear-gradient(135deg,#7b2ff7,#f107a3);
+    color:white;
+    padding:10px;
+    text-align:center;
+    border-radius:6px;
+}
+
+.day{
+    min-height:65px;
+    background:#fafafa;
+    border:1px solid #eee;
+    padding:8px;
+    border-radius:7px;
+    cursor:pointer;
+}
+
+.day:hover{
+    background:#eee5ff;
+}
+
+.today{
+    background:#7b2ff7;
+    color:white;
+}
+
+/* APPOINTMENT */
+
+.appointment{
+    padding:18px;
+    margin:12px 0;
+    border-left:6px solid #7b2ff7;
+    border-radius:12px;
+    background:linear-gradient(135deg,#faf7ff,#fff5fb);
+}
+
+.appointment-grid{
+    display:grid;
+    grid-template-columns:repeat(2,1fr);
+    gap:8px 20px;
+}
+
+.token{
+    display:inline-block;
+    background:#7b2ff7;
+    color:white;
+    padding:6px 12px;
+    border-radius:20px;
+    font-weight:bold;
+}
+
+.status{
+    display:inline-block;
+    padding:5px 10px;
+    border-radius:20px;
+    font-size:12px;
+    font-weight:bold;
+}
+
+.status.booked{
+    background:#fff3cd;
+    color:#856404;
+}
+
+.status.paid{
+    background:#d4edda;
+    color:#155724;
+}
+
+.status.pending{
+    background:#cfe2ff;
+    color:#084298;
+}
+
+.status.cancelled{
+    background:#f8d7da;
+    color:#721c24;
+}
+
+.status.cash{
+    background:#d4edda;
+    color:#155724;
+}
+
+/* PAYMENT */
+
+.payment-modal{
+    display:none;
+    position:fixed;
+    inset:0;
+    background:rgba(0,0,0,.78);
+    z-index:9999;
+    justify-content:center;
+    align-items:center;
+    padding:15px;
+}
+
+.payment-box{
+    background:white;
+    width:480px;
+    max-width:95%;
+    max-height:95vh;
+    overflow:auto;
+    border-radius:25px;
+    padding:25px;
+    text-align:center;
+}
+
+.payment-box h2{
+    color:#673ab7;
+}
+
+.phonepe-qr{
+    width:300px;
+    max-width:90%;
+    display:block;
+    margin:20px auto;
+    border-radius:12px;
+    box-shadow:0 5px 20px rgba(0,0,0,.15);
+}
+
+.payment-name{
+    font-size:20px;
+    font-weight:bold;
+    margin:8px;
+}
+
+.amount-board{
+    background:linear-gradient(135deg,#673ab7,#f107a3,#ff6b6b);
+    color:white;
+    border-radius:18px;
+    padding:18px;
+    margin:15px 0;
+}
+
+.amount-board .amount{
+    font-size:36px;
+    font-weight:bold;
+    margin-top:5px;
+}
+
+/* SEARCH */
+
+.search-box{
+    display:flex;
+    gap:10px;
+}
+
+.search-box input{
+    margin:0;
+}
+
+.search-box button{
+    width:160px;
+}
+
+/* EMERGENCY */
+
+.emergency-screen{
+    display:none;
+    position:fixed;
+    inset:0;
+    z-index:20000;
+    background:#b00000;
+    color:white;
+    align-items:center;
+    justify-content:center;
+    text-align:center;
+    padding:20px;
+}
+
+.emergency-content{
+    border:5px solid white;
+    border-radius:25px;
+    padding:35px;
+    max-width:600px;
+    animation:dangerFlash .5s infinite alternate;
+}
+
+.emergency-content h1{
+    font-size:55px;
+}
+
+@keyframes dangerFlash{
+    from{
+        background:#b00000;
+        transform:scale(1);
+    }
+    to{
+        background:#ff0000;
+        transform:scale(1.02);
+    }
+}
+
+/* VOICE BOX */
+
+.voice-box{
+    padding:15px;
+    border-radius:15px;
+    background:linear-gradient(135deg,#fff0f7,#eef7ff);
+    border:2px solid #f107a3;
+    margin-top:15px;
+}
+
+.voice-status{
+    font-weight:bold;
+    margin-top:10px;
+    color:#7b2ff7;
+}
+
+/* EDIT DOCTOR */
+
+.edit-doctor-box{
+    display:none;
+    margin-top:15px;
+    padding:18px;
+    border-radius:15px;
+    background:linear-gradient(135deg,#fff8e1,#fce4ec,#e8eaf6);
+    border:2px solid #7b2ff7;
+}
+
+.doctor-preview{
+    padding:15px;
+    border-radius:12px;
+    background:linear-gradient(135deg,#e3f2fd,#f3e5f5);
+    margin-top:12px;
+}
+
+.reminder-box{
+    background:linear-gradient(135deg,#e8f5e9,#e3f2fd);
+    padding:14px;
+    border-radius:12px;
+    margin-top:15px;
+}
+
+/* DARK */
+
+.dark{
+    background:#121212;
+    color:#eee;
+}
+
+.dark .card,
+.dark .stat,
+.dark .appointment{
+    background:#222;
+    color:#eee;
+}
+
+.dark input,
+.dark select,
+.dark textarea{
+    background:#333;
+    color:white;
+    border-color:#555;
+}
+
+.dark .day{
+    background:#292929;
+    color:white;
+}
+
+.dark .payment-box{
+    background:#222;
+    color:white;
+}
+
+.dark .edit-doctor-box{
+    background:#252525;
+}
+
+/* RESPONSIVE */
+
+@media(max-width:1000px){
+
+    .stats{
+        grid-template-columns:repeat(3,1fr);
+    }
+
+}
+
+@media(max-width:700px){
+
+    .grid,
+    .three-grid,
+    .appointment-grid{
+        grid-template-columns:1fr;
+    }
+
+    .stats{
+        grid-template-columns:repeat(2,1fr);
+    }
+
+    .header h1{
+        font-size:22px;
+    }
+
+    .calendar{
+        gap:2px;
+    }
+
+    .day{
+        min-height:50px;
+        font-size:12px;
+    }
+
+    .search-box{
+        display:block;
+    }
+
+    .search-box button{
+        width:100%;
+    }
+
+}
+</style>
+</head>
+
+<body>
+
+<!-- LOGIN -->
+
+<div class="login" id="loginPage">
+
+<div class="login-box">
+
+<div class="login-logo">🏥</div>
+
+<h1>Hasya Hospital</h1>
+
+<p>Hospital Management System</p>
+
+<input id="user" placeholder="Enter Your Name">
+
+<button class="primary" onclick="login()">
+🔐 Login
+</button>
+
+<p style="margin-top:15px;font-size:13px;">
+Password is not required
+</p>
+
+<p id="savedUserText"
+style="font-size:13px;color:#7b2ff7;">
+</p>
+
+</div>
+
+</div>
+
+
+<!-- DASHBOARD -->
+
+<div class="dashboard" id="dashboard">
+
+<div class="header">
+
+<h1>🏥 Hasya Hospital Management System</h1>
+
+<p id="welcome"></p>
+
+</div>
+
+
+<!-- LANGUAGE / DATE -->
+
+<div class="grid">
+
+<div class="card">
+
+<h3>🌐 Language</h3>
+
+<select id="language" onchange="changeLanguage()">
+
+<option value="en">English</option>
+<option value="te">Telugu</option>
+<option value="hi">Hindi</option>
+<option value="ta">Tamil</option>
+<option value="mr">Marathi</option>
+
+</select>
+
+</div>
+
+<div class="card">
+
+<h3>📅 Today's Date</h3>
+
+<h2 id="todayDate"></h2>
+
+</div>
+
+</div>
+
+
+<!-- STATS -->
+
+<div class="stats">
+
+<div class="stat">
+<h2 id="total">0</h2>
+<p>📋 Total Appointments</p>
+</div>
+
+<div class="stat">
+<h2 id="busy">0</h2>
+<p>🔴 Busy Doctors</p>
+</div>
+
+<div class="stat">
+<h2 id="available">3</h2>
+<p>🟢 Available Doctors</p>
+</div>
+
+<div class="stat">
+<h2 id="currentToken">0</h2>
+<p>🎫 Last Token</p>
+</div>
+
+<div class="stat">
+<h2 id="paidCount">0</h2>
+<p>💰 Paid Payments</p>
+</div>
+
+</div>
+
+
+<!-- DOCTOR SCHEDULE -->
+
+<div class="card">
+
+<h2>👨‍⚕️ Doctor Schedule & Available Timings</h2>
+
+<div class="three-grid" id="doctorSchedule"></div>
+
+</div>
+
+
+<!-- EDIT DOCTOR -->
+
+<div class="card">
+
+<h2>✏️ Doctor Details / Edit Doctor</h2>
+
+<div class="grid">
+
+<div>
+
+<label>👨‍⚕️ Select Doctor</label>
+
+<select id="editDoctorSelect" onchange="loadDoctorForEdit()">
+
+<option value="Dr Hasini">Dr Hasini</option>
+<option value="Dr Yash">Dr Yash</option>
+<option value="Dr Hasya">Dr Hasya</option>
+<option value="__custom__">➕ Other Doctor</option>
+
+</select>
+
+</div>
+
+<div>
+
+<label>🟢 Doctor Availability</label>
+
+<select id="doctorAvailabilityEdit">
+
+<option value="Available">🟢 Available</option>
+<option value="Not Available">🔴 Not Available</option>
+
+</select>
+
+</div>
+
+</div>
+
+<div class="edit-doctor-box" id="editDoctorBox">
+
+<h3>✏️ Edit Doctor Information</h3>
+
+<div class="grid">
+
+<div>
+
+<label>👨‍⚕️ Doctor Name</label>
+
+<input id="editDoctorName"
+placeholder="Enter Doctor Name">
+
+</div>
+
+<div>
+
+<label>🕒 Morning / Main Start</label>
+
+<input id="editStart1"
+type="time">
+
+</div>
+
+<div>
+
+<label>🕒 Morning / Main End</label>
+
+<input id="editEnd1"
+type="time">
+
+</div>
+
+<div>
+
+<label>🌆 Second Shift Start</label>
+
+<input id="editStart2"
+type="time">
+
+</div>
+
+<div>
+
+<label>🌆 Second Shift End</label>
+
+<input id="editEnd2"
+type="time">
+
+</div>
+
+</div>
+
+<div class="grid">
+
+<button class="green"
+onclick="saveDoctorChanges()">
+💾 Save Doctor Changes
+</button>
+
+<button class="red"
+onclick="cancelDoctorEdit()">
+❌ Cancel Edit
+</button>
+
+</div>
+
+</div>
+
+<div class="doctor-preview" id="doctorPreview">
+
+<b>ℹ️ Doctor Information</b>
+
+<p id="doctorPreviewText">
+Select a doctor to view availability and working hours.
+</p>
+
+</div>
+
+</div>
+
+
+<!-- APPOINTMENT BOOKING -->
+
+<div class="card">
+
+<h2>📋 Appointment Booking</h2>
+
+<div class="grid">
+
+<div>
+<label>👤 Patient Name</label>
+<input id="patient" placeholder="Patient Name">
+</div>
+
+<div>
+<label>📱 Phone Number</label>
+<input id="phone" type="tel" placeholder="Phone Number">
+</div>
+
+<div>
+<label>🎂 Age</label>
+<input id="age" type="number" placeholder="Age">
+</div>
+
+<div>
+<label>⚖️ Weight (kg)</label>
+<input id="weight" type="number" placeholder="Weight">
+</div>
+
+<div>
+<label>🩺 Blood Pressure</label>
+<input id="bp" placeholder="Example: 120/80">
+</div>
+
+<div>
+<label>🤒 Problem</label>
+<input id="problem" placeholder="Patient Problem">
+</div>
+
+<div>
+<label>👨‍⚕️ Doctor</label>
+
+<select id="doctor" onchange="doctorChanged()">
+
+<option value="Dr Hasini">👩‍⚕️ Dr Hasini</option>
+<option value="Dr Yash">👨‍⚕️ Dr Yash</option>
+<option value="Dr Hasya">👨‍⚕️ Dr Hasya</option>
+<option value="__custom__">➕ Other Doctor</option>
+
+</select>
+
+<div id="bookingDoctorStatus"
+style="margin-top:8px;">
+</div>
+
+</div>
+
+<div id="customDoctorBookingBox"
+style="display:none;">
+
+<label>✏️ Other Doctor Name</label>
+
+<input id="customBookingDoctorName"
+placeholder="Enter Doctor Name"
+oninput="updateAvailableTimes()">
+
+</div>
+
+<div>
+<label>📅 Date</label>
+<input id="date" type="date" onchange="dateChanged()">
+</div>
+
+<div>
+<label>⏰ Available Time</label>
+<select id="time"></select>
+</div>
+
+<div>
+<label>💳 Payment Method</label>
+
+<select id="payment" onchange="paymentMethodChanged()">
+
+<option value="Cash">💵 Cash</option>
+<option value="PhonePe">📱 PhonePe / UPI</option>
+
+</select>
+
+</div>
+
+<div>
+<label>💰 Payment Amount (₹)</label>
+
+<input
+id="amount"
+type="number"
+min="0"
+placeholder="Enter Amount">
+
+</div>
+
+<div>
+
+<label>🔔 Appointment Reminder</label>
+
+<select id="reminderMinutes">
+
+<option value="0">🔕 No Reminder</option>
+<option value="5">🔔 5 Minutes Before</option>
+<option value="10">🔔 10 Minutes Before</option>
+<option value="15">🔔 15 Minutes Before</option>
+<option value="30">🔔 30 Minutes Before</option>
+<option value="60">🔔 1 Hour Before</option>
+
+</select>
+
+</div>
+
+<div style="grid-column:1/-1;">
+
+<label>📝 Notes</label>
+
+<textarea
+id="notes"
+placeholder="Enter patient notes / special instructions"></textarea>
+
+</div>
+
+</div>
+
+
+<!-- LIVE AMOUNT -->
+
+<div class="amount-board">
+
+<div>💰 PAYMENT AMOUNT</div>
+
+<div class="amount">
+₹ <span id="amountDisplay">0</span>
+</div>
+
+<div id="paymentInstruction">
+Select payment method and enter amount
+</div>
+
+</div>
+
+
+<div class="grid" style="margin-top:15px;">
+
+<button class="green" onclick="bookAppointment()">
+🎫 Book Appointment
+</button>
+
+<button class="red" onclick="emergency()">
+🚨 EMERGENCY
+</button>
+
+</div>
+
+
+<div class="grid">
+
+<button class="purple" onclick="showPaymentQR()">
+💳 Show PhonePe QR
+</button>
+
+<button class="secondary" onclick="darkMode()">
+🌙 Dark Mode
+</button>
+
+</div>
+
+
+<button class="blue" onclick="window.print()">
+🖨 Print Appointment History
+</button>
+
+
+<!-- VOICE EMERGENCY -->
+
+<div class="voice-box">
+
+<h3>🎙️ Emergency Voice Command</h3>
+
+<p style="margin-top:8px;">
+Click the button and say:
+<b>"Emergency"</b>
+</p>
+
+<button class="red"
+onclick="startEmergencyVoice()">
+🎙️ Start Emergency Voice
+</button>
+
+<div class="voice-status"
+id="voiceStatus">
+🎤 Voice command is OFF
+</div>
+
+</div>
+
+
+<button class="orange"
+style="margin-top:10px;"
+onclick="enableNotifications()">
+🔔 Enable Appointment Notifications
+</button>
+
+</div>
+
+
+<!-- CALENDAR -->
+
+<div class="card">
+
+<div class="calendar-head">
+
+<button class="purple" onclick="previousMonth()">
+◀️ Previous
+</button>
+
+<h2 id="monthYear"></h2>
+
+<button class="purple" onclick="nextMonth()">
+Next ▶️
+</button>
+
+</div>
+
+<div class="calendar" id="calendar"></div>
+
+</div>
+
+
+<!-- SEARCH -->
+
+<div class="card">
+
+<h2>🔎 Search Patient</h2>
+
+<div class="search-box">
+
+<input id="searchInput"
+placeholder="Enter patient name or phone number">
+
+<button class="blue" onclick="searchPatient()">
+Search
+</button>
+
+</div>
+
+<button class="secondary" onclick="showHistory()">
+📜 Show All Appointments
+</button>
+
+</div>
+
+
+<!-- APPOINTMENT HISTORY -->
+
+<div class="card">
+
+<h2>📜 Appointment History</h2>
+
+<div id="history"></div>
+
+</div>
+
+
+<!-- PAYMENT HISTORY -->
+
+<div class="card">
+
+<h2>📖 Payment History Book</h2>
+
+<p style="margin-bottom:15px;color:#777;">
+Cash and PhonePe payment records
+</p>
+
+<div id="paymentHistory"></div>
+
+</div>
+
+</div>
+
+
+<!-- PHONEPE PAYMENT MODAL -->
+
+<div class="payment-modal" id="paymentModal">
+
+<div class="payment-box">
+
+<h2>💜 PhonePe Payment</h2>
+
+<p>Scan this QR using PhonePe or any UPI app</p>
+
+<div class="amount-board">
+
+<div>AMOUNT TO PAY</div>
+
+<div class="amount">
+₹ <span id="qrAmount">0</span>
+</div>
+
+</div>
+
+<img
+src="phonepe-qr.jpg"
+class="phonepe-qr"
+alt="Agulla Yashwanth PhonePe QR"
+>
+
+<div class="payment-name">
+AGULLA YASHWANTH
+</div>
+
+<p>Scan QR to make payment</p>
+
+<br>
+
+<button class="green" onclick="paymentDone()">
+✓ Payment Done
+</button>
+
+<button class="red" onclick="closePaymentQR()">
+Close
+</button>
+
+</div>
+
+</div>
+
+
+<!-- EMERGENCY -->
+
+<div class="emergency-screen" id="emergencyScreen">
+
+<div class="emergency-content">
+
+<h1>🚨</h1>
+
+<h2>EMERGENCY ALERT</h2>
+
+<h3>DANGER • DANGER • DANGER</h3>
+
+<p style="margin:20px 0;">
+Emergency patient arrived.
+Please attend immediately.
+</p>
+
+<button
+class="secondary"
+onclick="closeEmergency()"
+style="width:200px;">
+✓ Emergency Attended
+</button>
+
+</div>
+
+</div>
+
+
+<script>
+
+/* =====================================================
+   DATA
+===================================================== */
+
+let appointments =
+JSON.parse(localStorage.getItem("hasyaAppointments")) || [];
+
+let currentUser =
+localStorage.getItem("hasyaCurrentUser") || "";
+
+let currentMonth =
+new Date().getMonth();
+
+let currentYear =
+new Date().getFullYear();
+
+let selectedPaymentAppointment = null;
+
+let editingDoctor = null;
+
+let reminderTimer = null;
+
+
+/* =====================================================
+   DEFAULT DOCTOR SCHEDULE
+===================================================== */
+
+const doctorSchedules = {
+
+"Dr Hasini":[
+"09:00","09:30","10:00","10:30","11:00",
+"11:30","12:00","16:00","16:30","17:00"
+],
+
+"Dr Yash":[
+"10:00","10:30","11:00","11:30","12:00",
+"12:30","15:00","15:30","16:00","16:30"
+],
+
+"Dr Hasya":[
+"09:00","09:30","10:00","10:30","14:00",
+"14:30","15:00","15:30","17:00","17:30"
+]
+
+};
+
+
+/* =====================================================
+   DEFAULT DOCTOR DETAILS
+===================================================== */
+
+let doctorDetails =
+JSON.parse(
+localStorage.getItem("hasyaDoctorDetails")
+) || {
+
+"Dr Hasini":{
+available:true,
+start1:"09:00",
+end1:"12:00",
+start2:"16:00",
+end2:"17:00"
+},
+
+"Dr Yash":{
+available:true,
+start1:"10:00",
+end1:"12:30",
+start2:"15:00",
+end2:"16:30"
+},
+
+"Dr Hasya":{
+available:true,
+start1:"09:00",
+end1:"10:30",
+start2:"14:00",
+end2:"15:30"
+}
+
+};
+
+
+/* =====================================================
+   CUSTOM DOCTOR
+===================================================== */
+
+let customDoctor =
+JSON.parse(
+localStorage.getItem("hasyaCustomDoctor")
+) || {
+
+name:"",
+available:true,
+start1:"09:00",
+end1:"13:00",
+start2:"",
+end2:""
+
+};
+
+
+/* =====================================================
+   TRANSLATIONS
+===================================================== */
+
+const translations={
+
+en:{
+welcome:"Welcome to Hasya Hospital",
+booked:"Your appointment has been booked successfully",
+token:"Your token number is",
+cancelled:"Appointment cancelled successfully",
+paid:"Payment marked as completed",
+emergency:"Attention please. Emergency patient arrived."
+},
+
+te:{
+welcome:"హాస్య హాస్పిటల్‌కు స్వాగతం",
+booked:"మీ అపాయింట్‌మెంట్ విజయవంతంగా బుక్ అయింది",
+token:"మీ టోకెన్ నంబర్",
+cancelled:"అపాయింట్‌మెంట్ విజయవంతంగా క్యాన్సిల్ అయింది",
+paid:"పేమెంట్ విజయవంతంగా పూర్తయింది",
+emergency:"దయచేసి గమనించండి. అత్యవసర రోగి వచ్చారు."
+},
+
+hi:{
+welcome:"हास्य अस्पताल में आपका स्वागत है",
+booked:"आपकी अपॉइंटमेंट सफलतापूर्वक बुक हो गई है",
+token:"आपका टोकन नंबर है",
+cancelled:"अपॉइंटमेंट सफलतापूर्वक रद्द कर दी गई है",
+paid:"भुगतान सफलतापूर्वक पूरा हुआ",
+emergency:"कृपया ध्यान दें। आपातकालीन मरीज आया है।"
+},
+
+ta:{
+welcome:"ஹாஸ்யா மருத்துவமனைக்கு வரவேற்கிறோம்",
+booked:"உங்கள் சந்திப்பு வெற்றிகரமாக பதிவு செய்யப்பட்டது",
+token:"உங்கள் டோக்கன் எண்",
+cancelled:"சந்திப்பு வெற்றிகரமாக ரத்து செய்யப்பட்டது",
+paid:"பணம் வெற்றிகரமாக செலுத்தப்பட்டது",
+emergency:"கவனத்திற்கு. அவசர நோயாளி வந்துள்ளார்."
+},
+
+mr:{
+welcome:"हास्य हॉस्पिटलमध्ये आपले स्वागत आहे",
+booked:"आपली अपॉइंटमेंट यशस्वीरित्या बुक झाली",
+token:"आपला टोकन नंबर",
+cancelled:"अपॉइंटमेंट यशस्वीरित्या रद्द झाली",
+paid:"पेमेंट यशस्वीरित्या पूर्ण झाले",
+emergency:"कृपया लक्ष द्या. आपत्कालीन रुग्ण आला आहे."
+}
+
+};
+
+
+/* =====================================================
+   VOICE SPEAK
+===================================================== */
+
+function speak(text){
+
+if(!("speechSynthesis" in window))
+return;
+
+let message =
+new SpeechSynthesisUtterance(text);
+
+let lang =
+document.getElementById("language").value;
+
+if(lang==="te")
+message.lang="te-IN";
+else if(lang==="hi")
+message.lang="hi-IN";
+else if(lang==="ta")
+message.lang="ta-IN";
+else if(lang==="mr")
+message.lang="mr-IN";
+else
+message.lang="en-IN";
+
+message.rate=.9;
+
+speechSynthesis.cancel();
+
+speechSynthesis.speak(message);
+
+}
+
+
+/* =====================================================
+   DANGER SOUND
+===================================================== */
+
+function dangerSound(){
+
+try{
+
+const AudioContext =
+window.AudioContext ||
+window.webkitAudioContext;
+
+const ctx = new AudioContext();
+
+if(ctx.state==="suspended"){
+ctx.resume();
+}
+
+let start = ctx.currentTime;
+
+for(let i=0;i<14;i++){
+
+let osc =
+ctx.createOscillator();
+
+let gain =
+ctx.createGain();
+
+osc.type="square";
+
+osc.frequency.value =
+i%2===0 ? 1100 : 500;
+
+gain.gain.setValueAtTime(
+0.0001,
+start+i*.18
+);
+
+gain.gain.exponentialRampToValueAtTime(
+0.4,
+start+i*.18+.03
+);
+
+gain.gain.exponentialRampToValueAtTime(
+0.0001,
+start+i*.18+.15
+);
+
+osc.connect(gain);
+
+gain.connect(ctx.destination);
+
+osc.start(start+i*.18);
+
+osc.stop(start+i*.18+.16);
+
+}
+
+}
+catch(error){
+
+console.log("Danger sound unavailable",error);
+
+}
+
+}
+
+
+/* =====================================================
+   LOGIN
+===================================================== */
+
+function login(){
+
+let user =
+document.getElementById("user")
+.value
+.trim();
+
+if(user===""){
+
+alert("Please enter your name");
+
+return;
+
+}
+
+currentUser=user;
+
+localStorage.setItem(
+"hasyaCurrentUser",
+currentUser
+);
+
+document.getElementById("loginPage")
+.style.display="none";
+
+document.getElementById("dashboard")
+.style.display="block";
+
+document.getElementById("welcome").innerText=
+"Welcome "+user;
+
+speak(translations.en.welcome);
+
+initialize();
+
+}
+
+
+/* =====================================================
+   INITIALIZE
+===================================================== */
+
+function initialize(){
+
+let today=new Date();
+
+let yyyy=
+today.getFullYear();
+
+let mm=
+String(today.getMonth()+1)
+.padStart(2,"0");
+
+let dd=
+String(today.getDate())
+.padStart(2,"0");
+
+document.getElementById("date")
+.value=
+yyyy+"-"+mm+"-"+dd;
+
+document.getElementById("todayDate")
+.innerText=
+today.toDateString();
+
+updateAvailableTimes();
+
+createCalendar();
+
+showHistory();
+
+showPaymentHistory();
+
+updateStats();
+
+renderDoctorSchedule();
+
+updateAmountDisplay();
+
+loadDoctorForEdit();
+
+startReminderChecker();
+
+}
+
+
+/* =====================================================
+   PAGE LOAD
+===================================================== */
+
+window.addEventListener("DOMContentLoaded",function(){
+
+let savedUser =
+localStorage.getItem("hasyaCurrentUser");
+
+if(savedUser){
+
+document.getElementById("user").value=
+savedUser;
+
+document.getElementById("savedUserText")
+.innerText=
+"💾 Saved user: "+savedUser;
+
+}
+
+document.getElementById("amount")
+.addEventListener(
+"input",
+updateAmountDisplay
+);
+
+});
+
+
+/* =====================================================
+   LANGUAGE
+===================================================== */
+
+function changeLanguage(){
+
+let lang=
+document.getElementById("language")
+.value;
+
+document.getElementById("welcome")
+.innerText=
+translations[lang].welcome+
+" - "+
+currentUser;
+
+speak(
+translations[lang].welcome
+);
+
+}
+
+
+/* =====================================================
+   PAYMENT AMOUNT
+===================================================== */
+
+function updateAmountDisplay(){
+
+let amount =
+document.getElementById("amount")
+?.value || 0;
+
+document.getElementById("amountDisplay")
+.innerText=
+Number(amount)
+.toLocaleString("en-IN");
+
+}
+
+
+function paymentMethodChanged(){
+
+let method =
+document.getElementById("payment")
+.value;
+
+let instruction =
+document.getElementById("paymentInstruction");
+
+if(method==="Cash"){
+
+instruction.innerText=
+"💵 Patient is paying by CASH";
+
+}
+else{
+
+instruction.innerText=
+"📱 Scan PhonePe QR to pay";
+
+}
+
+}
+
+
+/* =====================================================
+   GENERATE SLOTS
+===================================================== */
+
+function generateSlots(start,end){
+
+if(!start || !end)
+return [];
+
+let result=[];
+
+let startParts=
+start.split(":");
+
+let endParts=
+end.split(":");
+
+let startMinutes=
+Number(startParts[0])*60+
+Number(startParts[1]);
+
+let endMinutes=
+Number(endParts[0])*60+
+Number(endParts[1]);
+
+for(
+let minutes=startMinutes;
+minutes<=endMinutes;
+minutes+=30
+){
+
+let h=
+Math.floor(minutes/60);
+
+let m=
+minutes%60;
+
+result.push(
+String(h).padStart(2,"0")+
+":"+
+String(m).padStart(2,"0")
+);
+
+}
+
+return result;
+
+}
+
+
+/* =====================================================
+   GET DOCTOR NAME
+===================================================== */
+
+function getBookingDoctor(){
+
+let selected=
+document.getElementById("doctor")
+.value;
+
+if(selected==="__custom__"){
+
+let name=
+document.getElementById(
+"customBookingDoctorName"
+).value.trim();
+
+return name;
+
+}
+
+return selected;
+
+}
+
+
+/* =====================================================
+   GET DOCTOR SCHEDULE
+===================================================== */
+
+function getDoctorSlots(doctor){
+
+if(doctor==="")
+return [];
+
+if(
+doctorSchedules[doctor] &&
+!doctorDetails[doctor]
+){
+
+return doctorSchedules[doctor];
+
+}
+
+if(doctorDetails[doctor]){
+
+let d=
+doctorDetails[doctor];
+
+if(!d.available)
+return [];
+
+return [
+...generateSlots(d.start1,d.end1),
+...generateSlots(d.start2,d.end2)
+];
+
+}
+
+if(
+customDoctor.name &&
+doctor===customDoctor.name
+){
+
+if(!customDoctor.available)
+return [];
+
+return [
+...generateSlots(
+customDoctor.start1,
+customDoctor.end1
+),
+...generateSlots(
+customDoctor.start2,
+customDoctor.end2
+)
+];
+
+}
+
+return [];
+
+}
+
+
+/* =====================================================
+   GET DOCTOR DETAILS
+===================================================== */
+
+function getDoctorInfo(doctor){
+
+if(doctorDetails[doctor])
+return doctorDetails[doctor];
+
+if(
+customDoctor.name &&
+doctor===customDoctor.name
+)
+return customDoctor;
+
+return {
+available:true,
+start1:"",
+end1:"",
+start2:"",
+end2:""
+};
+
+}
+
+
+/* =====================================================
+   HOURS TEXT
+===================================================== */
+
+function getHoursText(doctor){
+
+let d=
+getDoctorInfo(doctor);
+
+let parts=[];
+
+if(d.start1 && d.end1)
+parts.push(
+formatTime(d.start1)+
+" - "+
+formatTime(d.end1)
+);
+
+if(d.start2 && d.end2)
+parts.push(
+formatTime(d.start2)+
+" - "+
+formatTime(d.end2)
+);
+
+if(parts.length===0)
+return "Hours not set";
+
+return parts.join("  |  ");
+
+}
+
+
+/* =====================================================
+   AVAILABLE TIMES
+===================================================== */
+
+function getAvailableTimes(doctor,date){
+
+let all=
+getDoctorSlots(doctor);
+
+let booked=
+appointments.filter(a=>
+
+a.doctor===doctor &&
+a.date===date &&
+a.status!=="Cancelled"
+
+);
+
+let bookedTimes=
+booked.map(a=>a.time);
+
+return all.filter(
+time=>!bookedTimes.includes(time)
+);
+
+}
+
+
+/* =====================================================
+   UPDATE BOOKING DOCTOR STATUS
+===================================================== */
+
+function updateBookingDoctorStatus(){
+
+let doctor=
+getBookingDoctor();
+
+let box=
+document.getElementById(
+"bookingDoctorStatus"
+);
+
+if(!doctor){
+
+box.innerHTML=
+`<span class="availability not">
+🔴 Enter Doctor Name
+</span>`;
+
+return;
+
+}
+
+let info=
+getDoctorInfo(doctor);
+
+let date=
+document.getElementById("date").value;
+
+let freeSlots=
+date
+?getAvailableTimes(doctor,date)
+:[ ];
+
+let isAvailable=
+info.available &&
+(
+!date ||
+freeSlots.length>0
+);
+
+box.innerHTML=`
+
+<span class="availability ${
+isAvailable
+?"available"
+:"not"
+}">
+${
+isAvailable
+?"🟢 AVAILABLE"
+:"🔴 NOT AVAILABLE"
+}
+</span>
+
+<div style="font-size:12px;margin-top:5px;">
+🕒 ${escapeHTML(getHoursText(doctor))}
+</div>
+
+`;
+
+}
+
+
+/* =====================================================
+   DOCTOR CHANGED
+===================================================== */
+
+function doctorChanged(){
+
+let value=
+document.getElementById("doctor").value;
+
+let customBox=
+document.getElementById(
+"customDoctorBookingBox"
+);
+
+if(value==="__custom__"){
+
+customBox.style.display="block";
+
+}
+else{
+
+customBox.style.display="none";
+
+}
+
+updateAvailableTimes();
+
+renderDoctorSchedule();
+
+}
+
+
+/* =====================================================
+   UPDATE AVAILABLE TIMES
+===================================================== */
+
+function updateAvailableTimes(){
+
+let doctor=
+getBookingDoctor();
+
+let date=
+document.getElementById("date").value;
+
+let select=
+document.getElementById("time");
+
+select.innerHTML="";
+
+updateBookingDoctorStatus();
+
+if(!doctor){
+
+let option=
+document.createElement("option");
+
+option.innerText=
+"Enter Doctor Name";
+
+select.appendChild(option);
+
+return;
+
+}
+
+if(!date){
+
+let option=
+document.createElement("option");
+
+option.innerText=
+"Select Date First";
+
+select.appendChild(option);
+
+return;
+
+}
+
+let info=
+getDoctorInfo(doctor);
+
+if(!info.available){
+
+let option=
+document.createElement("option");
+
+option.innerText=
+"Doctor Not Available";
+
+select.appendChild(option);
+
+return;
+
+}
+
+let available=
+getAvailableTimes(
+doctor,
+date
+);
+
+if(available.length===0){
+
+let option=
+document.createElement("option");
+
+option.innerText=
+"No timings available";
+
+select.appendChild(option);
+
+return;
+
+}
+
+available.forEach(time=>{
+
+let option=
+document.createElement("option");
+
+option.value=time;
+
+option.innerText=
+formatTime(time);
+
+select.appendChild(option);
+
+});
+
+}
+
+
+/* =====================================================
+   DATE
+===================================================== */
+
+function dateChanged(){
+
+let date=
+document.getElementById("date").value;
+
+if(date){
+
+let d=
+new Date(date+"T00:00:00");
+
+currentMonth=
+d.getMonth();
+
+currentYear=
+d.getFullYear();
+
+}
+
+updateAvailableTimes();
+
+createCalendar();
+
+renderDoctorSchedule();
+
+}
+
+
+/* =====================================================
+   TIME
+===================================================== */
+
+function formatTime(time){
+
+if(!time)
+return "-";
+
+let parts=
+time.split(":");
+
+let hour=
+parseInt(parts[0]);
+
+let minute=
+parts[1];
+
+let suffix=
+hour>=12?"PM":"AM";
+
+hour=
+hour%12 || 12;
+
+return hour+":"+minute+" "+suffix;
+
+}
+
+
+/* =====================================================
+   BOOK APPOINTMENT
+===================================================== */
+
+function bookAppointment(){
+
+let patient=
+document.getElementById("patient")
+.value.trim();
+
+let phone=
+document.getElementById("phone")
+.value.trim();
+
+let age=
+document.getElementById("age").value;
+
+let weight=
+document.getElementById("weight").value;
+
+let bp=
+document.getElementById("bp").value;
+
+let problem=
+document.getElementById("problem")
+.value.trim();
+
+let doctor=
+getBookingDoctor();
+
+let date=
+document.getElementById("date").value;
+
+let time=
+document.getElementById("time").value;
+
+let payment=
+document.getElementById("payment").value;
+
+let amount=
+document.getElementById("amount").value;
+
+let notes=
+document.getElementById("notes").value.trim();
+
+let reminderMinutes=
+Number(
+document.getElementById(
+"reminderMinutes"
+).value
+);
+
+
+/* BASIC VALIDATION */
+
+if(
+patient==="" ||
+doctor==="" ||
+date==="" ||
+!time ||
+time==="No timings available" ||
+time==="Doctor Not Available"
+){
+
+alert(
+"Please enter Patient, Doctor, Date and Time"
+);
+
+return;
+
+}
+
+
+/* DOCTOR AVAILABILITY */
+
+let doctorInfo=
+getDoctorInfo(doctor);
+
+if(!doctorInfo.available){
+
+alert(
+"🔴 Doctor is currently NOT AVAILABLE."
+);
+
+return;
+
+}
+
+
+/* AMOUNT */
+
+if(
+amount==="" ||
+Number(amount)<=0
+){
+
+alert(
+"Please enter Payment Amount"
+);
+
+document.getElementById("amount")
+.focus();
+
+return;
+
+}
+
+
+/* OVERLAP */
+
+let duplicate=
+appointments.find(a=>
+
+a.doctor===doctor &&
+a.date===date &&
+a.time===time &&
+a.status!=="Cancelled"
+
+);
+
+if(duplicate){
+
+dangerSound();
+
+alert(
+"⚠️⚠️ OVERLAP / SLOT CONFLICT ⚠️⚠️\n\n"+
+"This doctor already has an appointment at this time.\n\n"+
+"Doctor: "+doctor+
+"\nDate: "+date+
+"\nTime: "+formatTime(time)
+);
+
+updateAvailableTimes();
+
+renderDoctorSchedule();
+
+return;
+
+}
+
+
+/* TOKEN */
+
+let token=
+getNextToken();
+
+
+/* CATEGORY */
+
+let category="Child";
+
+let numericAge=
+parseInt(age);
+
+if(numericAge>=60)
+category="Senior Citizen";
+else if(numericAge>40)
+category="Middle Age";
+else if(numericAge>18)
+category="Adult";
+else if(numericAge>12)
+category="Teen";
+
+
+/* REMINDER */
+
+let reminderAt="";
+
+if(reminderMinutes>0){
+
+let appointmentDateTime=
+new Date(
+date+"T"+time
+);
+
+appointmentDateTime.setMinutes(
+appointmentDateTime.getMinutes()-
+reminderMinutes
+);
+
+reminderAt=
+appointmentDateTime.toISOString();
+
+}
+
+
+/* APPOINTMENT */
+
+let appointment={
+
+id:Date.now(),
+
+token:token,
+
+patient:patient,
+
+phone:phone,
+
+age:age,
+
+weight:weight,
+
+bp:bp,
+
+problem:problem,
+
+notes:notes,
+
+doctor:doctor,
+
+date:date,
+
+time:time,
+
+category:category,
+
+bookedBy:currentUser,
+
+paymentMethod:payment,
+
+paymentAmount:Number(amount),
+
+paymentStatus:
+payment==="Cash"
+? "Cash Paid"
+: "Pending",
+
+paymentTime:
+payment==="Cash"
+? new Date().toLocaleString()
+: "",
+
+reminderMinutes:
+reminderMinutes,
+
+reminderAt:
+reminderAt,
+
+reminderSent:false,
+
+status:"Booked",
+
+createdAt:
+new Date().toLocaleString()
+
+};
+
+
+appointments.push(
+appointment
+);
+
+saveData();
+
+
+/* CASH PAYMENT */
+
+if(payment==="Cash"){
+
+addPaymentHistory(
+appointment
+);
+
+}
+
+
+/* VOICE */
+
+let lang=
+document.getElementById(
+"language"
+).value;
+
+speak(
+translations[lang].booked+
+". "+
+translations[lang].token+
+" "+
+token
+);
+
+
+/* ALERT */
+
+alert(
+"✅ APPOINTMENT BOOKED\n\n"+
+"🎫 Token: "+token+
+"\n👤 Patient: "+patient+
+"\n👨‍⚕️ Doctor: "+doctor+
+"\n⏰ Time: "+formatTime(time)+
+"\n💳 Payment: "+payment+
+"\n💰 Amount: ₹"+
+Number(amount)
+.toLocaleString("en-IN")+
+"\n👤 Booked By: "+currentUser+
+(
+reminderMinutes>0
+?
+"\n🔔 Reminder: "+
+reminderMinutes+
+" minutes before"
+:""
+)+
+(
+payment==="Cash"
+?
+"\n💵 CASH PAID"
+:""
+)
+);
+
+
+/* PHONEPE */
+
+if(payment==="PhonePe"){
+
+selectedPaymentAppointment=
+appointment.id;
+
+showPaymentQR();
+
+}
+
+
+/* CLEAR */
+
+clearPatientFields();
+
+showHistory();
+
+showPaymentHistory();
+
+updateStats();
+
+updateAvailableTimes();
+
+createCalendar();
+
+renderDoctorSchedule();
+
+}
+
+
+/* =====================================================
+   TOKEN
+===================================================== */
+
+function getNextToken(){
+
+if(appointments.length===0)
+return 1;
+
+let numbers=
+appointments.map(
+a=>Number(a.token)||0
+);
+
+return Math.max(...numbers)+1;
+
+}
+
+
+/* =====================================================
+   CLEAR
+===================================================== */
+
+function clearPatientFields(){
+
+document.getElementById("patient").value="";
+
+document.getElementById("phone").value="";
+
+document.getElementById("age").value="";
+
+document.getElementById("weight").value="";
+
+document.getElementById("bp").value="";
+
+document.getElementById("problem").value="";
+
+document.getElementById("amount").value="";
+
+document.getElementById("notes").value="";
+
+document.getElementById("reminderMinutes")
+.value="0";
+
+updateAmountDisplay();
+
+}
+
+
+/* =====================================================
+   SAVE
+===================================================== */
+
+function saveData(){
+
+localStorage.setItem(
+"hasyaAppointments",
+JSON.stringify(
+appointments
+)
+);
+
+}
+
+
+/* =====================================================
+   PAYMENT QR
+===================================================== */
+
+function showPaymentQR(){
+
+let amount=0;
+
+if(selectedPaymentAppointment){
+
+let appointment=
+appointments.find(
+a=>a.id===
+selectedPaymentAppointment
+);
+
+if(appointment){
+
+amount=
+appointment.paymentAmount;
+
+}
+
+}
+else{
+
+amount=
+document.getElementById(
+"amount"
+)?.value || 0;
+
+}
+
+document.getElementById(
+"qrAmount"
+).innerText=
+Number(amount)
+.toLocaleString("en-IN");
+
+document.getElementById(
+"paymentModal"
+).style.display="flex";
+
+}
+
+
+/* =====================================================
+   PAYMENT DONE
+===================================================== */
+
+function paymentDone(){
+
+if(!selectedPaymentAppointment){
+
+alert(
+"Please book a PhonePe appointment first."
+);
+
+return;
+
+}
+
+let appointment=
+appointments.find(
+a=>a.id===
+selectedPaymentAppointment
+);
+
+if(!appointment)
+return;
+
+
+/* MARK PAYMENT */
+
+appointment.paymentStatus=
+"Money Deducted / Paid";
+
+appointment.paymentTime=
+new Date().toLocaleString();
+
+appointment.paidBy=
+currentUser;
+
+saveData();
+
+addPaymentHistory(
+appointment
+);
+
+
+/* SUCCESS */
+
+alert(
+"✅ PAYMENT SUCCESSFUL\n\n"+
+"💰 Money Deducted Successfully\n\n"+
+"👤 Patient: "+
+appointment.patient+
+"\n💰 Amount: ₹"+
+Number(
+appointment.paymentAmount
+)
+.toLocaleString("en-IN")+
+"\n📱 Method: PhonePe / UPI"+
+"\n👤 Login User: "+
+currentUser
+);
+
+let lang=
+document.getElementById(
+"language"
+).value;
+
+speak(
+translations[lang].paid
+);
+
+closePaymentQR();
+
+showHistory();
+
+showPaymentHistory();
+
+updateStats();
+
+selectedPaymentAppointment=
+null;
+
+}
+
+
+/* =====================================================
+   CLOSE PAYMENT
+===================================================== */
+
+function closePaymentQR(){
+
+document.getElementById(
+"paymentModal"
+).style.display="none";
+
+}
+
+
+/* =====================================================
+   PAY FROM HISTORY
+===================================================== */
+
+function payAppointment(id){
+
+selectedPaymentAppointment=id;
+
+showPaymentQR();
+
+}
+
+
+/* =====================================================
+   PAYMENT HISTORY SAVE
+===================================================== */
+
+function addPaymentHistory(
+appointment
+){
+
+let history=
+JSON.parse(
+localStorage.getItem(
+"hasyaPayments"
+)
+) || [];
+
+
+/* AVOID DUPLICATE */
+
+let exists=
+history.find(
+p=>p.appointmentId===
+appointment.id
+);
+
+if(exists){
+
+exists.status=
+appointment.paymentStatus;
+
+exists.amount=
+appointment.paymentAmount;
+
+exists.paymentTime=
+appointment.paymentTime;
+
+exists.loginUser=
+appointment.bookedBy ||
+currentUser;
+
+}
+else{
+
+history.push({
+
+id:Date.now(),
+
+appointmentId:
+appointment.id,
+
+token:
+appointment.token,
+
+patient:
+appointment.patient,
+
+doctor:
+appointment.doctor,
+
+amount:
+appointment.paymentAmount,
+
+method:
+appointment.paymentMethod,
+
+status:
+appointment.paymentStatus,
+
+date:
+appointment.date,
+
+time:
+appointment.time,
+
+paymentTime:
+appointment.paymentTime ||
+new Date().toLocaleString(),
+
+loginUser:
+appointment.bookedBy ||
+currentUser
+
+});
+
+}
+
+localStorage.setItem(
+"hasyaPayments",
+JSON.stringify(history)
+);
+
+showPaymentHistory();
+
+}
+
+
+/* =====================================================
+   PAYMENT HISTORY
+===================================================== */
+
+function showPaymentHistory(){
+
+let box=
+document.getElementById(
+"paymentHistory"
+);
+
+if(!box)
+return;
+
+let history=
+JSON.parse(
+localStorage.getItem(
+"hasyaPayments"
+)
+) || [];
+
+box.innerHTML="";
+
+if(history.length===0){
+
+box.innerHTML=`
+
+<div class="appointment">
+
+<h3>📖 No Payments Yet</h3>
+
+<p>
+Completed Cash and PhonePe payments
+will appear here.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+
+[...history]
+.reverse()
+.forEach(p=>{
+
+let statusClass=
+p.status.includes("Cash")
+?"cash"
+:"paid";
+
+box.innerHTML+=`
+
+<div class="appointment">
+
+<div style="
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:8px;
+">
+
+<span class="token">
+🧾 Token ${escapeHTML(p.token)}
+</span>
+
+<span class="status ${statusClass}">
+${escapeHTML(p.status)}
+</span>
+
+</div>
+
+<hr style="margin:12px 0;">
+
+<div class="appointment-grid">
+
+<p>
+<b>👤 Patient:</b>
+${escapeHTML(p.patient)}
+</p>
+
+<p>
+<b>👨‍⚕️ Doctor:</b>
+${escapeHTML(p.doctor)}
+</p>
+
+<p>
+<b>💰 Amount:</b>
+₹${Number(p.amount)
+.toLocaleString("en-IN")}
+</p>
+
+<p>
+<b>💳 Method:</b>
+${escapeHTML(p.method)}
+</p>
+
+<p>
+<b>📅 Date:</b>
+${escapeHTML(p.date)}
+</p>
+
+<p>
+<b>⏰ Time:</b>
+${formatTime(p.time)}
+</p>
+
+<p>
+<b>🕒 Payment Time:</b>
+${escapeHTML(p.paymentTime)}
+</p>
+
+<p>
+<b>👤 Login User:</b>
+${escapeHTML(
+p.loginUser || "-"
+)}
+</p>
+
+</div>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =====================================================
+   CANCEL
+===================================================== */
+
+function cancelAppointment(id){
+
+let appointment=
+appointments.find(
+a=>a.id===id
+);
+
+if(!appointment)
+return;
+
+if(appointment.status==="Cancelled")
+return;
+
+let confirmCancel=
+confirm(
+"Cancel appointment for "+
+appointment.patient+"?"
+);
+
+if(!confirmCancel)
+return;
+
+appointment.status=
+"Cancelled";
+
+saveData();
+
+let lang=
+document.getElementById(
+"language"
+).value;
+
+speak(
+translations[lang].cancelled
+);
+
+showHistory();
+
+updateStats();
+
+updateAvailableTimes();
+
+renderDoctorSchedule();
+
+createCalendar();
+
+}
+
+
+/* =====================================================
+   HISTORY
+===================================================== */
+
+function showHistory(){
+
+let history=
+document.getElementById(
+"history"
+);
+
+history.innerHTML="";
+
+if(appointments.length===0){
+
+history.innerHTML=`
+
+<div class="appointment">
+
+<h3>📋 No appointments yet</h3>
+
+<p>
+Booked appointments will appear here.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+let sorted=
+[...appointments].sort(
+(a,b)=>
+Number(b.token)-
+Number(a.token)
+);
+
+sorted.forEach(a=>{
+
+history.innerHTML+=
+createAppointmentHTML(a);
+
+});
+
+}
+
+
+/* =====================================================
+   APPOINTMENT HTML
+===================================================== */
+
+function createAppointmentHTML(a){
+
+let paymentClass=
+(a.paymentStatus || "")
+.includes("Paid") ||
+(a.paymentStatus || "")
+.includes("Deducted")
+?"paid"
+:"pending";
+
+let statusClass=
+a.status==="Cancelled"
+?"cancelled"
+:"booked";
+
+let paymentButton="";
+
+if(
+a.paymentMethod!=="Cash" &&
+a.paymentStatus==="Pending" &&
+a.status!=="Cancelled"
+){
+
+paymentButton=`
+
+<button
+class="purple"
+onclick="payAppointment(${a.id})">
+
+💳 Pay ₹${Number(
+a.paymentAmount
+)
+.toLocaleString("en-IN")}
+
+</button>
+
+`;
+
+}
+
+let cancelButton="";
+
+if(a.status!=="Cancelled"){
+
+cancelButton=`
+
+<button
+class="red"
+onclick="cancelAppointment(${a.id})">
+
+❌ Cancel Appointment
+
+</button>
+
+`;
+
+}
+
+let callButton="";
+
+if(a.phone){
+
+callButton=`
+
+<button
+class="blue"
+onclick="callPatient('${escapeValue(a.phone)}')">
+
+📞 Call Patient
+
+</button>
+
+`;
+
+}
+
+let reminderText=
+a.reminderMinutes &&
+Number(a.reminderMinutes)>0
+?
+a.reminderMinutes+
+" minutes before"
+:
+"No reminder";
+
+return `
+
+<div class="appointment">
+
+<div style="
+display:flex;
+justify-content:space-between;
+flex-wrap:wrap;
+gap:8px;
+">
+
+<span class="token">
+🎫 Token ${escapeHTML(a.token)}
+</span>
+
+<span class="status ${statusClass}">
+${escapeHTML(a.status)}
+</span>
+
+</div>
+
+<hr style="margin:12px 0;">
+
+<div class="appointment-grid">
+
+<p>
+<b>👤 Patient:</b>
+${escapeHTML(a.patient)}
+</p>
+
+<p>
+<b>📱 Phone:</b>
+${escapeHTML(a.phone || "-")}
+</p>
+
+<p>
+<b>🎂 Age:</b>
+${escapeHTML(a.age || "-")}
+</p>
+
+<p>
+<b>Category:</b>
+${escapeHTML(a.category || "-")}
+</p>
+
+<p>
+<b>⚖️ Weight:</b>
+${escapeHTML(a.weight || "-")} kg
+</p>
+
+<p>
+<b>🩺 BP:</b>
+${escapeHTML(a.bp || "-")}
+</p>
+
+<p>
+<b>🤒 Problem:</b>
+${escapeHTML(a.problem || "-")}
+</p>
+
+<p>
+<b>👨‍⚕️ Doctor:</b>
+${escapeHTML(a.doctor)}
+</p>
+
+<p>
+<b>📅 Date:</b>
+${escapeHTML(a.date)}
+</p>
+
+<p>
+<b>⏰ Time:</b>
+${formatTime(a.time)}
+</p>
+
+<p>
+<b>💳 Payment:</b>
+${escapeHTML(a.paymentMethod)}
+</p>
+
+<p>
+<b>💰 Amount:</b>
+₹${Number(a.paymentAmount)
+.toLocaleString("en-IN")}
+</p>
+
+<p>
+<b>🔔 Reminder:</b>
+${escapeHTML(reminderText)}
+</p>
+
+<p>
+<b>👤 Booked By:</b>
+${escapeHTML(a.bookedBy || "-")}
+</p>
+
+<p>
+<b>💳 Payment Status:</b>
+
+<span class="status ${paymentClass}">
+${escapeHTML(a.paymentStatus || "-")}
+</span>
+
+</p>
+
+</div>
+
+${
+a.notes
+?
+`
+<div style="
+margin-top:12px;
+padding:10px;
+background:#fff3cd;
+border-radius:10px;
+">
+<b>📝 Notes:</b>
+${escapeHTML(a.notes)}
+</div>
+`
+:""
+}
+
+${
+a.paymentTime
+?
+`
+<p style="margin-top:10px;">
+<b>🕒 Payment Time:</b>
+${escapeHTML(a.paymentTime)}
+</p>
+`
+:""
+}
+
+<div class="grid" style="margin-top:15px;">
+
+${callButton}
+
+${paymentButton}
+
+${cancelButton}
+
+</div>
+
+</div>
+
+`;
+
+}
+
+
+/* =====================================================
+   SEARCH
+===================================================== */
+
+function searchPatient(){
+
+let query=
+document.getElementById(
+"searchInput"
+)
+.value
+.trim()
+.toLowerCase();
+
+let history=
+document.getElementById(
+"history"
+);
+
+if(query===""){
+
+showHistory();
+
+return;
+
+}
+
+let results=
+appointments.filter(a=>
+
+String(a.patient)
+.toLowerCase()
+.includes(query)
+
+||
+
+String(a.phone)
+.toLowerCase()
+.includes(query)
+
+||
+
+String(a.token)
+.toLowerCase()
+.includes(query)
+
+||
+
+String(a.doctor)
+.toLowerCase()
+.includes(query)
+
+);
+
+history.innerHTML="";
+
+if(results.length===0){
+
+history.innerHTML=`
+
+<div class="appointment">
+
+<h3>❌ Patient Not Found</h3>
+
+<p>
+No appointment matched your search.
+</p>
+
+</div>
+
+`;
+
+return;
+
+}
+
+results.forEach(a=>{
+
+history.innerHTML+=
+createAppointmentHTML(a);
+
+});
+
+}
+
+
+/* =====================================================
+   CALL
+===================================================== */
+
+function callPatient(phone){
+
+if(!phone){
+
+alert(
+"Phone number not available"
+);
+
+return;
+
+}
+
+window.location.href=
+"tel:"+phone;
+
+}
+
+
+/* =====================================================
+   ESCAPE
+===================================================== */
+
+function escapeHTML(value){
+
+return String(value ?? "")
+.replace(/&/g,"&amp;")
+.replace(/</g,"&lt;")
+.replace(/>/g,"&gt;")
+.replace(/"/g,"&quot;")
+.replace(/'/g,"&#039;");
+
+}
+
+function escapeValue(value){
+
+return String(value ?? "")
+.replace(/'/g,"\\'");
+
+}
+
+
+/* =====================================================
+   STATS
+===================================================== */
+
+function updateStats(){
+
+let activeAppointments=
+appointments.filter(
+a=>a.status!=="Cancelled"
+);
+
+document.getElementById(
+"total"
+).innerText=
+activeAppointments.length;
+
+
+let activeDoctors=
+new Set(
+activeAppointments.map(
+a=>a.doctor
+)
+);
+
+document.getElementById(
+"busy"
+).innerText=
+activeDoctors.size;
+
+
+/* INCLUDE CUSTOM DOCTOR */
+
+let totalDoctors=3;
+
+if(customDoctor.name)
+totalDoctors++;
+
+document.getElementById(
+"available"
+).innerText=
+Math.max(
+0,
+totalDoctors-activeDoctors.size
+);
+
+
+let active=
+appointments.filter(
+a=>a.status!=="Cancelled"
+);
+
+if(active.length){
+
+document.getElementById(
+"currentToken"
+).innerText=
+active[active.length-1].token;
+
+}
+else{
+
+document.getElementById(
+"currentToken"
+).innerText="0";
+
+}
+
+
+let paid=
+appointments.filter(a=>
+
+a.paymentStatus==="Cash Paid" ||
+
+a.paymentStatus===
+"Money Deducted / Paid"
+
+).length;
+
+document.getElementById(
+"paidCount"
+).innerText=paid;
+
+}
+
+
+/* =====================================================
+   DOCTOR SCHEDULE
+===================================================== */
+
+function renderDoctorSchedule(){
+
+let container=
+document.getElementById(
+"doctorSchedule"
+);
+
+let date=
+document.getElementById(
+"date"
+).value;
+
+if(!date)
+return;
+
+container.innerHTML="";
+
+
+let doctors=[
+"Dr Hasini",
+"Dr Yash",
+"Dr Hasya"
+];
+
+if(customDoctor.name){
+doctors.push(
+customDoctor.name
+);
+}
+
+
+doctors.forEach(
+(doctor,index)=>{
+
+let all=
+getDoctorSlots(doctor);
+
+let info=
+getDoctorInfo(doctor);
+
+let booked=
+appointments
+.filter(a=>
+
+a.doctor===doctor &&
+a.date===date &&
+a.status!=="Cancelled"
+
+)
+.map(a=>a.time);
+
+let freeCount=
+all.filter(
+t=>!booked.includes(t)
+).length;
+
+let isAvailable=
+info.available &&
+freeCount>0;
+
+let slots=
+all.map(time=>{
+
+let isBooked=
+booked.includes(time);
+
+return `
+
+<span class="slot ${
+isBooked
+?"booked"
+:"free"
+}">
+
+${formatTime(time)}
+
+${isBooked
+?" • Booked"
+:" • Free"}
+
+</span>
+
+`;
+
+}).join("");
+
+container.innerHTML+=`
+
+<div class="doctor-card">
+
+<h3>
+👨‍⚕️ ${escapeHTML(doctor)}
+</h3>
+
+<div class="availability ${
+isAvailable
+?"available"
+:"not"
+}">
+
+${
+isAvailable
+?"🟢 AVAILABLE"
+:"🔴 NOT AVAILABLE"
+}
+
+</div>
+
+<div class="hours">
+
+🕒 <b>Working Hours:</b><br>
+${escapeHTML(
+getHoursText(doctor)
+)}
+
+</div>
+
+<p style="margin-top:10px;">
+${
+freeCount
+} timings available
+</p>
+
+<div class="slot-list">
+${slots || "<span>No timings</span>"}
+</div>
+
+<button
+class="orange"
+onclick="editSpecificDoctor('${escapeValue(doctor)}')"
+style="margin-top:12px;">
+
+✏️ Edit Doctor
+
+</button>
+
+</div>
+
+`;
+
+});
+
+}
+
+
+/* =====================================================
+   EDIT SPECIFIC DOCTOR
+===================================================== */
+
+function editSpecificDoctor(
+doctor
+){
+
+if(
+doctor===customDoctor.name
+){
+
+document.getElementById(
+"editDoctorSelect"
+).value="__custom__";
+
+}
+else{
+
+document.getElementById(
+"editDoctorSelect"
+).value=doctor;
+
+}
+
+loadDoctorForEdit();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+}
+
+
+/* =====================================================
+   LOAD DOCTOR FOR EDIT
+===================================================== */
+
+function loadDoctorForEdit(){
+
+let select=
+document.getElementById(
+"editDoctorSelect"
+);
+
+let value=
+select.value;
+
+let box=
+document.getElementById(
+"editDoctorBox"
+);
+
+let nameInput=
+document.getElementById(
+"editDoctorName"
+);
+
+let availability=
+document.getElementById(
+"doctorAvailabilityEdit"
+);
+
+let start1=
+document.getElementById(
+"editStart1"
+);
+
+let end1=
+document.getElementById(
+"editEnd1"
+);
+
+let start2=
+document.getElementById(
+"editStart2"
+);
+
+let end2=
+document.getElementById(
+"editEnd2"
+);
+
+
+box.style.display="block";
+
+
+if(value==="__custom__"){
+
+editingDoctor="__custom__";
+
+nameInput.value=
+customDoctor.name || "";
+
+availability.value=
+customDoctor.available
+?"Available"
+:"Not Available";
+
+start1.value=
+customDoctor.start1 || "";
+
+end1.value=
+customDoctor.end1 || "";
+
+start2.value=
+customDoctor.start2 || "";
+
+end2.value=
+customDoctor.end2 || "";
+
+}
+else{
+
+editingDoctor=value;
+
+let d=
+doctorDetails[value];
+
+if(!d){
+
+d={
+available:true,
+start1:"",
+end1:"",
+start2:"",
+end2:""
+};
+
+}
+
+nameInput.value=value;
+
+availability.value=
+d.available
+?"Available"
+:"Not Available";
+
+start1.value=
+d.start1 || "";
+
+end1.value=
+d.end1 || "";
+
+start2.value=
+d.start2 || "";
+
+end2.value=
+d.end2 || "";
+
+}
+
+updateDoctorPreview();
+
+}
+
+
+/* =====================================================
+   DOCTOR PREVIEW
+===================================================== */
+
+function updateDoctorPreview(){
+
+let value=
+document.getElementById(
+"editDoctorSelect"
+).value;
+
+let doctorName;
+
+if(value==="__custom__"){
+
+doctorName=
+document.getElementById(
+"editDoctorName"
+).value ||
+"Other Doctor";
+
+}
+else{
+
+doctorName=value;
+
+}
+
+let available=
+document.getElementById(
+"doctorAvailabilityEdit"
+).value;
+
+let start1=
+document.getElementById(
+"editStart1"
+).value;
+
+let end1=
+document.getElementById(
+"editEnd1"
+).value;
+
+let start2=
+document.getElementById(
+"editStart2"
+).value;
+
+let end2=
+document.getElementById(
+"editEnd2"
+).value;
+
+let hours=[];
+
+if(start1 && end1)
+hours.push(
+formatTime(start1)+
+" - "+
+formatTime(end1)
+);
+
+if(start2 && end2)
+hours.push(
+formatTime(start2)+
+" - "+
+formatTime(end2)
+);
+
+document.getElementById(
+"doctorPreviewText"
+).innerHTML=
+
+"👨‍⚕️ <b>"+
+escapeHTML(doctorName)+
+"</b><br>"+
+(
+available==="Available"
+?"🟢 Available"
+:"🔴 Not Available"
+)+
+"<br>🕒 "+
+(
+hours.length
+?escapeHTML(hours.join(" | "))
+:"Working hours not set"
+);
+
+}
+
+
+/* =====================================================
+   SAVE DOCTOR CHANGES
+===================================================== */
+
+function saveDoctorChanges(){
+
+let selected=
+document.getElementById(
+"editDoctorSelect"
+).value;
+
+let name=
+document.getElementById(
+"editDoctorName"
+).value.trim();
+
+let available=
+document.getElementById(
+"doctorAvailabilityEdit"
+).value==="Available";
+
+let start1=
+document.getElementById(
+"editStart1"
+).value;
+
+let end1=
+document.getElementById(
+"editEnd1"
+).value;
+
+let start2=
+document.getElementById(
+"editStart2"
+).value;
+
+let end2=
+document.getElementById(
+"editEnd2"
+).value;
+
+
+/* VALIDATION */
+
+if(name===""){
+
+alert(
+"Please enter Doctor Name"
+);
+
+return;
+
+}
+
+if(
+!start1 ||
+!end1
+){
+
+alert(
+"Please enter working hours"
+);
+
+return;
+
+}
+
+if(
+start1>=end1
+){
+
+alert(
+"End time must be after start time"
+);
+
+return;
+
+}
+
+if(
+start2 &&
+end2 &&
+start2>=end2
+){
+
+alert(
+"Second shift end time must be after start time"
+);
+
+return;
+
+}
+
+
+/* CUSTOM */
+
+if(selected==="__custom__"){
+
+if(
+customDoctor.name &&
+customDoctor.name!==name
+){
+
+appointments=
+appointments.map(a=>
+
+a.doctor===
+customDoctor.name
+?
+{
+...a,
+doctor:name
+}
+:a
+
+);
+
+saveData();
+
+}
+
+customDoctor={
+name:name,
+available:available,
+start1:start1,
+end1:end1,
+start2:start2,
+end2:end2
+};
+
+localStorage.setItem(
+"hasyaCustomDoctor",
+JSON.stringify(
+customDoctor
+)
+);
+
+}
+else{
+
+let oldName=selected;
+
+doctorDetails[oldName]={
+available:available,
+start1:start1,
+end1:end1,
+start2:start2,
+end2:end2
+};
+
+localStorage.setItem(
+"hasyaDoctorDetails",
+JSON.stringify(
+doctorDetails
+)
+);
+
+}
+
+
+/* REFRESH */
+
+alert(
+"✅ Doctor details saved successfully!"
+);
+
+document.getElementById(
+"editDoctorBox"
+).style.display="none";
+
+updateAvailableTimes();
+
+renderDoctorSchedule();
+
+updateStats();
+
+updateDoctorPreview();
+
+}
+
+
+/* =====================================================
+   CANCEL DOCTOR EDIT
+===================================================== */
+
+function cancelDoctorEdit(){
+
+document.getElementById(
+"editDoctorBox"
+).style.display="none";
+
+}
+
+
+/* =====================================================
+   CALENDAR
+===================================================== */
+
+function createCalendar(){
+
+let calendar=
+document.getElementById(
+"calendar"
+);
+
+calendar.innerHTML="";
+
+const months=[
+"January","February","March","April",
+"May","June","July","August",
+"September","October","November","December"
+];
+
+document.getElementById(
+"monthYear"
+).innerText=
+months[currentMonth]+
+" "+
+currentYear;
+
+const days=[
+"Sun","Mon","Tue","Wed","Thu","Fri","Sat"
+];
+
+days.forEach(day=>{
+
+let div=
+document.createElement("div");
+
+div.className="day-name";
+
+div.innerText=day;
+
+calendar.appendChild(div);
+
+});
+
+let firstDay=
+new Date(
+currentYear,
+currentMonth,
+1
+).getDay();
+
+let totalDays=
+new Date(
+currentYear,
+currentMonth+1,
+0
+).getDate();
+
+for(
+let i=0;
+i<firstDay;
+i++
+){
+
+calendar.appendChild(
+document.createElement("div")
+);
+
+}
+
+let today=new Date();
+
+for(
+let day=1;
+day<=totalDays;
+day++
+){
+
+let div=
+document.createElement("div");
+
+div.className="day";
+
+div.innerText=day;
+
+if(
+day===today.getDate() &&
+currentMonth===today.getMonth() &&
+currentYear===today.getFullYear()
+){
+
+div.classList.add("today");
+
+}
+
+let selected=
+currentYear+
+"-"+
+String(
+currentMonth+1
+).padStart(2,"0")+
+"-"+
+String(day).padStart(2,"0");
+
+let count=
+appointments.filter(a=>
+
+a.date===selected &&
+a.status!=="Cancelled"
+
+).length;
+
+if(count>0){
+
+div.innerHTML=
+day+
+`<br><small>🎫 ${count}</small>`;
+
+}
+
+div.onclick=function(){
+
+document.getElementById(
+"date"
+).value=
+selected;
+
+dateChanged();
+
+window.scrollTo({
+top:0,
+behavior:"smooth"
+});
+
+};
+
+calendar.appendChild(div);
+
+}
+
+}
+
+
+/* =====================================================
+   MONTH
+===================================================== */
+
+function previousMonth(){
+
+currentMonth--;
+
+if(currentMonth<0){
+
+currentMonth=11;
+currentYear--;
+
+}
+
+createCalendar();
+
+}
+
+
+function nextMonth(){
+
+currentMonth++;
+
+if(currentMonth>11){
+
+currentMonth=0;
+currentYear++;
+
+}
+
+createCalendar();
+
+}
+
+
+/* =====================================================
+   EMERGENCY
+===================================================== */
+
+function emergency(){
+
+/* DANGER SOUND */
+
+dangerSound();
+
+
+/* EMERGENCY SCREEN */
+
+let screen=
+document.getElementById(
+"emergencyScreen"
+);
+
+screen.style.display="flex";
+
+
+/* VOICE */
+
+let lang=
+document.getElementById(
+"language"
+).value;
+
+speak(
+translations[lang].emergency+
+" Danger. Emergency."
+);
+
+}
+
+
+/* =====================================================
+   CLOSE EMERGENCY
+===================================================== */
+
+function closeEmergency(){
+
+document.getElementById(
+"emergencyScreen"
+).style.display="none";
+
+}
+
+
+/* =====================================================
+   EMERGENCY VOICE RECOGNITION
+===================================================== */
+
+let emergencyRecognition=null;
+
+function startEmergencyVoice(){
+
+const SpeechRecognition=
+window.SpeechRecognition ||
+window.webkitSpeechRecognition;
+
+if(!SpeechRecognition){
+
+alert(
+"❌ Voice recognition is not supported in this browser.\n\nPlease use Google Chrome."
+);
+
+return;
+
+}
+
+if(emergencyRecognition){
+
+try{
+emergencyRecognition.stop();
+}
+catch(e){}
+
+}
+
+emergencyRecognition=
+new SpeechRecognition();
+
+let lang=
+document.getElementById(
+"language"
+).value;
+
+if(lang==="te")
+emergencyRecognition.lang="te-IN";
+else if(lang==="hi")
+emergencyRecognition.lang="hi-IN";
+else if(lang==="ta")
+emergencyRecognition.lang="ta-IN";
+else if(lang==="mr")
+emergencyRecognition.lang="mr-IN";
+else
+emergencyRecognition.lang="en-IN";
+
+emergencyRecognition.continuous=false;
+
+emergencyRecognition.interimResults=false;
+
+document.getElementById(
+"voiceStatus"
+).innerText=
+"🎙️ Listening... Say Emergency";
+
+emergencyRecognition.onresult=
+function(event){
+
+let transcript=
+event.results[0][0]
+.transcript
+.toLowerCase();
+
+document.getElementById(
+"voiceStatus"
+).innerText=
+"🎤 Heard: "+transcript;
+
+
+/* EMERGENCY WORDS */
+
+let emergencyWords=[
+
+"emergency",
+"urgent",
+"help",
+"danger",
+
+"అత్యవసరం",
+"అర్జెంట్",
+"సహాయం",
+
+"आपातकाल",
+"मदद",
+"आपात",
+
+"அவசரம்",
+"உதவி",
+
+"आपत्काल",
+"मदत"
+
+];
+
+let found=
+emergencyWords.some(
+word=>
+transcript.includes(
+word.toLowerCase()
+)
+);
+
+if(found){
+
+document.getElementById(
+"voiceStatus"
+).innerText=
+"🚨 EMERGENCY DETECTED!";
+
+dangerSound();
+
+emergency();
+
+}
+else{
+
+document.getElementById(
+"voiceStatus"
+).innerText=
+"❌ Emergency word not detected. Try again.";
+
+}
+
+};
+
+emergencyRecognition.onerror=
+function(event){
+
+document.getElementById(
+"voiceStatus"
+).innerText=
+"❌ Voice error: "+
+event.error;
+
+};
+
+emergencyRecognition.onend=
+function(){
+
+if(
+document.getElementById(
+"voiceStatus"
+).innerText.includes(
+"Listening"
+)
+){
+
+document.getElementById(
+"voiceStatus"
+).innerText=
+"🎤 Voice command stopped.";
+
+}
+
+};
+
+try{
+
+emergencyRecognition.start();
+
+}
+catch(error){
+
+console.log(error);
+
+}
+
+}
+
+
+/* =====================================================
+   APPOINTMENT REMINDERS
+===================================================== */
+
+function startReminderChecker(){
+
+if(reminderTimer)
+clearInterval(reminderTimer);
+
+checkAppointmentReminders();
+
+reminderTimer=
+setInterval(
+checkAppointmentReminders,
+30000
+);
+
+}
+
+
+function checkAppointmentReminders(){
+
+let now=
+new Date();
+
+let changed=false;
+
+appointments.forEach(a=>{
+
+if(
+a.status==="Cancelled" ||
+a.reminderSent ||
+!a.reminderAt
+)
+return;
+
+let reminderTime=
+new Date(a.reminderAt);
+
+if(
+now>=reminderTime
+){
+
+let appointmentTime=
+new Date(
+a.date+"T"+a.time
+);
+
+if(now<=appointmentTime){
+
+a.reminderSent=true;
+
+changed=true;
+
+let message=
+"🔔 Appointment Reminder. "+
+a.patient+
+" has an appointment with "+
+a.doctor+
+" at "+
+formatTime(a.time)+
+".";
+
+speak(message);
+
+showBrowserNotification(
+"🔔 Hasya Hospital Reminder",
+message
+);
+
+}
+
+}
+
+});
+
+if(changed){
+
+saveData();
+
+showHistory();
+
+}
+
+}
+
+
+/* =====================================================
+   NOTIFICATION PERMISSION
+===================================================== */
+
+function enableNotifications(){
+
+if(
+!("Notification" in window)
+){
+
+alert(
+"Browser notifications are not supported."
+);
+
+return;
+
+}
+
+Notification.requestPermission()
+.then(permission=>{
+
+if(permission==="granted"){
+
+alert(
+"✅ Notifications enabled!"
+);
+
+}
+else{
+
+alert(
+"🔕 Notification permission was not allowed."
+);
+
+}
+
+});
+
+}
+
+
+function showBrowserNotification(
+title,
+message
+){
+
+if(
+"Notification" in window &&
+Notification.permission==="granted"
+){
+
+new Notification(
+title,
+{
+body:message,
+icon:""
+}
+);
+
+}
+
+}
+
+
+/* =====================================================
+   DARK MODE
+===================================================== */
+
+function darkMode(){
+
+document.body.classList.toggle(
+"dark"
+);
+
+}
+
+
+/* =====================================================
+   TODAY
+===================================================== */
+
+document.getElementById(
+"todayDate"
+).innerText=
+new Date().toDateString();
+
+</script>
+
+</body>
+</html>
